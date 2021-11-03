@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="/org/springframework/boot/logging/logback/base.xml" />
+
+    <appender name="STDOUT"
+              class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!--    [%X{user}] [%X{function}]        -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--            <file>app.log</file>-->
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>/home/joseph/log/calculation/calculation.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- each archived file, size max 10MB -->
+            <maxFileSize>10MB</maxFileSize>
+            <!-- total size of all archive files, if total size > 20GB, it will delete old archived file -->
+            <totalSizeCap>20GB</totalSizeCap>
+            <!-- 60 days to keep -->
+            <maxHistory>60</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d %p %c{1.} [%t] %m%n</pattern>
+        </encoder>
+    </appender>
+
+<!--    <appender name="stash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
+<!--        <destination>127.0.0.1:4560</destination>-->
+
+<!--        &lt;!&ndash; encoder is required &ndash;&gt;-->
+<!--        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />-->
+<!--    </appender>-->
+
+<!--    <logger name="com.dv16888.dealers.controller" level="WARN">-->
+<!--        <appender-ref ref="stash"/>-->
+<!--    </logger>-->
+
+    <logger name="org.springframework" level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE-ROLLING"/>
+    </logger>
+    <logger name="com.dv16888.transaction" level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE-ROLLING"/>
+    </logger>
+    <logger name="com.dv16888.transaction" level="WARN">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE-ROLLING"/>
+    </logger>
+    <logger name="com.dv16888.transaction" level="ERROR">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE-ROLLING"/>
+    </logger>
+    <logger name="com.dv16888.transaction" level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE-ROLLING"/>
+    </logger>
+    <!--    <root level="ERROR">-->
+    <!--        <appender-ref ref="STDOUT" />-->
+    <!--        <appender-ref ref="FILE-ROLLING"/>-->
+    <!--    </root>-->
+
+</configuration>
